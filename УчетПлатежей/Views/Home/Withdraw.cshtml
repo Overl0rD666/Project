@@ -1,0 +1,53 @@
+﻿@model УчетПлатежей.Models.PaymentListViewModel
+@{
+    ViewData["Title"] = "Учет платежей";
+}
+<style>
+    .message {
+        border: 1px dashed grey;
+        padding: 5px;
+        font: 10pt Tahoma;
+        color: red;
+        text-align: center;
+    }
+</style>
+<div>
+    <h3>Платежи</h3>
+    @if (ViewBag.str != null)
+    {
+        <div class="message">@ViewBag.str</div><br />
+    }
+
+    <form method="get">
+        <div class="form-inline form-group">
+            <label class="control-label">ФИО: </label>
+            @Html.TextBox("name", Model.FullName, htmlAttributes: new { @class = "form-control" })
+            <input type="submit" value="Фильтр" class="btn btn-default" />
+        </div>
+    </form>
+
+    <br />
+    <table cellpadding="7" border="1" width="100%">
+        <tr>
+            <td>№</td>
+            <td>Дата</td>
+            <td>ФИО</td>
+            <td>Тип</td>
+            <td>Общая сумма</td>
+        </tr>
+        @foreach (var pay in Model.Payments)
+        {
+            <tr>
+                <td>@pay.PaymentId</td>
+                <td>@pay.Date</td>
+                <td>@pay.FullName</td>
+                <td>@pay.Type</td>
+                <td>@pay.Sum</td>
+                <td>
+                    <a asp-action="Edit" asp-controller="Home" asp-route-id="@pay.PaymentId">Подробнее</a> |
+                    <a asp-action="Delete" asp-controller="Home" asp-route-id="@pay.PaymentId">Удалить</a>
+                </td>
+            </tr>
+        }
+    </table>
+</div>

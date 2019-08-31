@@ -1,0 +1,79 @@
+﻿@model УчетПлатежей.Models.Payment
+@{
+    ViewData["Title"] = "Редактирование заявки";
+}
+
+<div>
+    <h3>Форма редактирования заявки</h3>
+    <p>(* - Обязательное для заполнения поле)</p>
+    <form asp-action="edit" asp-controller="home" asp-route-id="@Model.PaymentId">
+        <input type="hidden" name="PaymentId" value="@Model.PaymentId" />
+        <table>
+            <tr>
+                <td>Дата:</td>
+                <td><input type="text" name="Date" value="@Model.Date" /></td>
+            </tr>
+            <tr>
+                <td>ФИО:</td>
+                <td><input type="text" name="FullName" value="@Model.FullName" /></td>
+            </tr>
+            <tr>
+                <td>Тип*:</td>
+                <td>
+                    @switch (Model.Type)
+                    {
+                        case "Тип 1":
+                            <select name="Type">
+                                <option value="Тип 1" selected>Тип 1</option>
+                                <option value="Тип 2">Тип 2</option>
+                            </select>
+                            break;
+                        case "Тип 2":
+                            <select name="Type">
+                                <option value="Тип 1"> Тип 1 </option>
+                                <option value="Тип 2" selected> Тип 2 </option>
+                            </select>
+                            break;
+                        default:
+                            <select name="Type">
+                                <option value="Тип 1"> Тип 1 </option>
+                                <option value="Тип 2"> Тип 2 </option>
+                            </select>
+                            break;
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>Общая сумма заявки:</td>
+                <td><input type="text" id="txtS" disabled name="Sum" value="@Model.Sum" /></td>
+            </tr>
+            <tr>
+                <td></td>
+            </tr>
+        </table>
+        <br />
+        @if (Model.Positions.Count > 0)
+        {
+            <table>
+                <tr>
+                    <td>Заявленная сумма*</td>
+                    <td>Комментарий</td>
+                    <td>Вложенные файлы</td>
+                </tr>
+                @foreach (var pos in Model.Positions)
+                {
+                    <tr>
+                        <td><input name="Claims" type="text" value="@pos.Claim" /></td>
+                        <td><input name="Texts" type="text" value="@pos.Text" /></td>
+                        <td><a href="~/Home/GetBytes/@pos.PositionId">@pos.FileName</a></td>
+                        <td><input name="PositionId" type="hidden" value="@pos.PositionId" /></td>
+                        <td><a href="~/Home/Edit?pc=@Model.Positions.Count&add=false&pos_id=@pos.PositionId&id=@Model.PaymentId">Удалить</a></td>
+                    </tr>
+                }
+            </table>
+        }
+        <a href="~/Home/Edit?pc=@Model.Positions.Count&add=true&id=@Model.PaymentId">Добавить</a>
+        <br />
+        <input type="submit" value="Сохранить" />
+    </form>
+</div>

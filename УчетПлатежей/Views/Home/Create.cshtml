@@ -1,0 +1,60 @@
+﻿@model УчетПлатежей.Models.Payment
+@{
+    ViewData["Title"] = "Создание заявки";
+}
+
+<div>
+    <h3>Форма создания заявки</h3>
+    <p>Для создания заявки заполните следующие поля:</p>
+    <p>(* - Обязательное для заполнения поле)</p>
+    <form asp-action="Create" asp-controller="Home" method="post" enctype="multipart/form-data">
+        <input type="hidden" value="@Model.PaymentId" name="PaymentId" />
+        <table>
+            <tr>
+                <td>Дата:</td>
+                <td><input type="text" name="Date" value="@Model.Date" /></td>
+            </tr>
+            <tr>
+                <td>ФИО:</td>
+                <td><input type="text" name="FullName" value="@Model.FullName" /></td>
+            </tr>
+            <tr>
+                <td>Тип*:</td>
+                <td>
+                    <select name="Type">
+                        <option value="Тип 1">Тип 1</option>
+                        <option value="Тип 2">Тип 2</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Общая сумма заявки:</td>
+                <td><input type="text" disabled name="Sum" value="@Model.Sum" /></td>
+                <td><span asp-validation-for="Sum"></span></td>
+            </tr>
+            <tr>
+                <td></td>
+            </tr>
+        </table>
+        <br />
+        <table>
+            <tr>
+                <td>Заявленная сумма*</td>
+                <td>Комментарий</td>
+                <td>Вложенные файлы</td>
+            </tr>
+            @for (var i = 0; i < ViewBag.NPos; i++)
+            {
+                <tr>
+                    <td><input name="Claim" type="text" /></td>
+                    <td><input name="Text" value="" type="text" /></td>
+                    <td><input name="File" value="" type="file" /></td>
+                </tr>
+            }
+        </table>
+        <a href="~/Home/Create?pc=@ViewBag.NPos&add=true&pay_id=@ViewBag.PayId">Добавить</a>
+        <a href="~/Home/Create?pc=@ViewBag.NPos&add=false&pay_id=@ViewBag.PayId">Удалить</a>
+        <br />
+        <input type="submit" value="Создать" />
+    </form>
+</div>
