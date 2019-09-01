@@ -12,7 +12,7 @@
         <table>
             <tr>
                 <td>Дата:</td>
-                <td><input type="text" name="Date" value="@Model.Date" /></td>
+                <td><input type="text" name="Date" value="@DateTime.Today.ToShortDateString()" /></td>
             </tr>
             <tr>
                 <td>ФИО:</td>
@@ -52,9 +52,9 @@
                 </tr>
             }
         </table>
-        <a href="~/Home/Create?pc=@ViewBag.NPos&add=true&pay_id=@ViewBag.PayId">Добавить</a>
-        <a href="~/Home/Create?pc=@ViewBag.NPos&add=false&pay_id=@ViewBag.PayId">Удалить</a>
-        <br />
-        <input type="submit" value="Создать" />
+        <a href="~/Home/Create?pc=@ViewBag.NPos&add=true&pay_id=@ViewBag.PayId">Добавить позицию</a>
+        <a href="~/Home/Create?pc=@ViewBag.NPos&add=false&pay_id=@ViewBag.PayId" style="margin-left:2em">Удалить позицию</a>
+        <br /><br />
+        <input type="submit" value="Создать" class="btn btn-primary"/>
     </form>
 </div>

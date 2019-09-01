@@ -10,7 +10,7 @@ namespace УчетПлатежей.Models
         // ID платежа
         public int PaymentId { get; set; }
         // Дата
-        [DisplayFormat(DataFormatString = "{0:d}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime Date { get; set; }
         // ФИО
         public string FullName { get; set; }
